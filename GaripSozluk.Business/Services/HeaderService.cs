@@ -35,30 +35,29 @@ namespace GaripSozluk.Business.Services
             return List;
             
         }
-        public int AddHeader(string headerName,ClaimsPrincipal contextUser,int categoryId)
-        {           
-            var userId = contextUser.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            var header = new Header();
-            header.UserId = userId;
-            header.Title = headerName;
-            header.CreateDate = DateTime.Now;
-            header.CategoryId = categoryId;
-            _headerRepository.Add(header);
+        //public int AddHeader(string headerName,ClaimsPrincipal contextUser,int categoryId)
+        //{           
+        //    var userId = contextUser.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+        //    var header = new Header();
+        //    header.UserId = userId;
+        //    header.Title = headerName;
+        //    header.CreateDate = DateTime.Now;
+        //    header.CategoryId = categoryId;
+        //    _headerRepository.Add(header);
+        //    _headerRepository.SaveChanges();
+        //    return header.Id;
+        //}
 
-            //Todo: Alt satırdaki savechanges metodunu genelde try catch blokları içerisine almalısın. Bir üst satırdaki metot eklemesi çalışır ama alttaki metot veritabanına kayıt başarısız olursa hata fırlatır. Bunun önüne geçmek için alt satırda yorum olarak belirttiğim gibi bir kullanım uygulayabilirsin. Catch bloguna bak mesela hatalıysa -1 dönüyorum. controller'a -1 dönüyorsa demekki kayıt başarılı olmamış, veritabanına kaydedilmemiş. Kullanıcıya ona göre bir bilgi verilebilir.
-            /*
-            try
-            {
-                _headerRepository.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                return -1;
-            } 
-             */
-
+        //Todo: Alt satırdaki savechanges metodunu genelde try catch blokları içerisine almalısın. Bir üst satırdaki metot eklemesi çalışır ama alttaki metot veritabanına kayıt başarısız olursa hata fırlatır. Bunun önüne geçmek için alt satırda yorum olarak belirttiğim gibi bir kullanım uygulayabilirsin. Catch bloguna bak mesela hatalıysa -1 dönüyorum. controller'a -1 dönüyorsa demekki kayıt başarılı olmamış, veritabanına kaydedilmemiş. Kullanıcıya ona göre bir bilgi verilebilir.
+        /*
+        try
+        {
             _headerRepository.SaveChanges();
-            return header.Id;
         }
+        catch (Exception ex)
+        {
+            return -1;
+        } 
+         */
     }
 }
