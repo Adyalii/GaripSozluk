@@ -5,6 +5,7 @@ using System.Text;
 
 namespace GaripSozluk.Common.ViewModels
 {
+    //Todo: Bu PageViewModel düşüncen güzel olmuş, eline sağlık. Sayfanın en üstündeki Aksiyonlar, gündem gibi kategoriler için ViewComponent yazmak da güzel bir çözüm olur. 
    public class PageViewModel
     {
         //kategori listesi,sol tarafta aktif kategori başlık ve view model olacak,indexdeki modeli ver,viewmodeli göster

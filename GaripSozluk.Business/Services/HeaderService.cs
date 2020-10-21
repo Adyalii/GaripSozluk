@@ -44,6 +44,19 @@ namespace GaripSozluk.Business.Services
             header.CreateDate = DateTime.Now;
             header.CategoryId = categoryId;
             _headerRepository.Add(header);
+
+            //Todo: Alt satırdaki savechanges metodunu genelde try catch blokları içerisine almalısın. Bir üst satırdaki metot eklemesi çalışır ama alttaki metot veritabanına kayıt başarısız olursa hata fırlatır. Bunun önüne geçmek için alt satırda yorum olarak belirttiğim gibi bir kullanım uygulayabilirsin. Catch bloguna bak mesela hatalıysa -1 dönüyorum. controller'a -1 dönüyorsa demekki kayıt başarılı olmamış, veritabanına kaydedilmemiş. Kullanıcıya ona göre bir bilgi verilebilir.
+            /*
+            try
+            {
+                _headerRepository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            } 
+             */
+
             _headerRepository.SaveChanges();
             return header.Id;
         }

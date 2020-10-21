@@ -11,7 +11,7 @@ using System.Text;
 
 namespace GaripSozluk.Business.Services
 {
-   public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _headerCategoryRepository;
         public CategoryService(ICategoryRepository headerCategoryRepository)
@@ -34,6 +34,13 @@ namespace GaripSozluk.Business.Services
 
             }
             return List;
+
+            //Todo: Bu metodu alternatif olarak alttaki şekliyle yazabilirsin.
+            //var alternativeList = _headerCategoryRepository.GetAll().Select(category => new CategoryViewModel()
+            //{
+            //    Id = category.Id,
+            //    Title = category.Title
+            //}).ToList();
         }
 
         public List<SelectListItem> GetCategoryList()
