@@ -9,6 +9,7 @@ namespace GaripSozluk.Business.Interfaces
    public interface IHeaderService
     {
         ICollection<HeaderViewModel> GetAllCategory(int id);
-        int AddHeader(string headerName, ClaimsPrincipal contextUser, int categoryId);
+        //int AddHeader(string headerName, ClaimsPrincipal contextUser, int categoryId);
+        //int AddHeader();
     }
 }

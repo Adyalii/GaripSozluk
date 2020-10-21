@@ -35,8 +35,10 @@ namespace GaripSozluk.WebApp.Controllers
         {
             if (model.Title !=null)
             {
-                _headerService.AddHeader(model.Title, HttpContext.User, model.CategoryId);
-                return Redirect(Url.Action("Index", "Home", new { categoryId = model.CategoryId }));
+
+                //_headerService.AddHeader(model.CategoryId);
+                //_headerService.AddHeader(model.Title, HttpContext.User, model.CategoryId);
+                //return Redirect(Url.Action("Index", "Home", new { categoryId = model.CategoryId }));
             }
             //ModelState.AddModelError("", "Boş alan bırakmayınız");
             return RedirectToAction("NewHeader", new { categoryId = model.CategoryId });

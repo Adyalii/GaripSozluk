@@ -49,7 +49,8 @@ namespace GaripSozluk.WebApp.Controllers
 
         public IActionResult Privacy()
         {
-            _headerService.AddHeader("", HttpContext.User, 1);
+            //_headerService.AddHeader("", HttpContext.User, 1);
+            //_headerService.AddHeader(1);
             return View();
         }
 

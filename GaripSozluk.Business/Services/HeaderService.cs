@@ -35,17 +35,17 @@ namespace GaripSozluk.Business.Services
             return List;
             
         }
-        public int AddHeader(string headerName,ClaimsPrincipal contextUser,int categoryId)
-        {           
-            var userId = contextUser.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            var header = new Header();
-            header.UserId = userId;
-            header.Title = headerName;
-            header.CreateDate = DateTime.Now;
-            header.CategoryId = categoryId;
-            _headerRepository.Add(header);
-            _headerRepository.SaveChanges();
-            return header.Id;
-        }
+        //public int AddHeader(string headerName,ClaimsPrincipal contextUser,int categoryId)
+        //{           
+        //    var userId = contextUser.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+        //    var header = new Header();
+        //    header.UserId = userId;
+        //    header.Title = headerName;
+        //    header.CreateDate = DateTime.Now;
+        //    header.CategoryId = categoryId;
+        //    _headerRepository.Add(header);
+        //    _headerRepository.SaveChanges();
+        //    return header.Id;
+        //}
     }
 }
