@@ -1,0 +1,81 @@
+﻿@model DetailedSearchViewModel
+@{
+    ViewData["Title"] = "DetailedSearch";
+}
+
+<h1>Detaylı Arama</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="DetailedSearch" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label">Kelime</label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOne" class="control-label">1.Tarih</label>
+                <input asp-for="DateOne" id="DateOne" class="form-control" />
+                <span asp-validation-for="DateOne" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateTwo" class="control-label">2.Tarih</label>
+                <input asp-for="DateTwo" id="DateTwo" class="form-control" />
+                <span asp-validation-for="DateTwo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <select name="SortType">
+                    <option value="1">Yeniden Eskiye</option>
+                    <option value="2">Eskiden Yeniye</option>
+                </select>
+            </div>
+            @if (Model != null)
+            {
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="Model.CategoryList"></select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+
+                </div>
+            }
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Detaylı Arama</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h1>Bulunan Sonuçlar</h1>
+<div class="row col-12">
+    <div class="container">
+
+        @if (Model != null && Model.FoundedDetailedHeaders != null)
+        {
+            foreach (var item in Model.FoundedDetailedHeaders)
+            {
+                <div class="col-12">
+                    <a class="btn btn-outline-success btn-block" asp-area="" asp-route-headerId="@item.Id" asp-route-categoryId="@Model.SelectedCategoryId" asp-action="Index" asp-controller="Home">&nbsp;@item.Title</a>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#DateOne").on("change", function (e) {
+                $("#DateTwo").attr("min", $(this).val());
+            });
+
+            $("#DateTwo").on("change", function (e) {
+                $("#DateOne").attr("max", $(this).val());
+            });
+
+           
+        });
+
+    </script>
+}

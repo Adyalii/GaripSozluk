@@ -31,29 +31,19 @@ namespace GaripSozluk.WebApp.Controllers
             _headerService = headerService;
         }
 
-        public IActionResult Index(int categoryId=1)
+        public IActionResult Index(int categoryId=1,int headerId=1,int currentPage=1)
         {
             var model = new IndexViewModel();
             model.SelectedCategoryId = categoryId;
             model.Categories = _headerCategoryService.GetAllCategory();
             model.Headers = _headerService.GetAllCategory(categoryId);
-            //var resultCount = _postService.GetAll().Count();           
+            //var resultCount = _postService.GetAll().Count();      
+            model.Header = _headerService.GetAllPostByHeaderId(headerId,currentPage);
             return View(model);
         }
 
 
-        [Authorize]
-
-
-
-
-        public IActionResult Privacy()
-        {
-            //_headerService.AddHeader("", HttpContext.User, 1);
-            //_headerService.AddHeader(1);
-            return View();
-        }
-
+        
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //public IActionResult Error()
         //{

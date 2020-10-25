@@ -1,0 +1,11 @@
+﻿@model BlockedUsersViewModel
+@{
+    ViewData["Title"] = "GetBanUsers";
+}
+
+<h1>GetBanUsers</h1>
+
+@foreach (var item in Model.BannedUserList)
+{
+    <a class="btn btn-link btn-block text-danger text-left" asp-controller="User" asp-action="RemoveBan" asp-route-BanUserId="@item.Key" >@item.Value</a>
+}

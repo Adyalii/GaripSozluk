@@ -11,6 +11,9 @@ namespace GaripSozluk.Business.Interfaces
 {
     public interface IAccountService
     {
+       void AddBan(int userId, int BannedUserId);
+        IQueryable<BlockedUser> GetAll(int id);
+        void RemoveBan(int bannedId, int userId);
         //Task<UserClaimViewModel> GetUserInfos();
     }
 }

@@ -1,42 +1,61 @@
-﻿@{
+﻿@model IndexViewModel
+@{
     ViewData["Title"] = "Clone Sözlük";
 }
-
-
-<div class="col-9">
-
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">Gündemdekiler</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">İhtilal</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">İhtilal</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">İhtilal</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">İhtilal</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">İhtilal</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
-    <div class="row border m-4 p-2">
-        <a href="https://www.lipsum.com/">Olan Biten</a>
-        <p style="margin-right:auto; text-align:left">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    </div>
+<div class="display-3">
+    @Model.Header.Title
 </div>
-<<<<<<< HEAD
-<div class="col-md-1"></div>
-=======
+Görüntülenme Sayısı: @Model.Header.ClickCount
 
-@*@await Component.InvokeAsync("PostList")*@
->>>>>>> 56358ca51dfb61502246e058c4b6240c8bc5fd01
+<div class="col-form-label container">
+    <a class="page-link text-dark col-md-2" asp-area="" asp-controller="Post" asp-action="AddPost" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-headerId="@Model.Header.Id">Yorum Ekle</a>
+    @foreach (var item in Model.Header.PostLists)
+    {
+        <div class="row border m-4 p-2">
+            <div class="row col-12">
+                @item.Content
+            </div>
+            <div class="row col-12 mt-4 pt-4">
+                <p style="margin-right:auto; text-align:left">@item.UserName</p>
+                <p style="margin-right:auto; text-align:left">@item.CreateDate</p>
+                <a class="btn btn-link text-warning" asp-controller="User" asp-action="BanUser" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-blockedUserId="@item.UserId" asp-route-headerId="@Model.Header.Id">Engelleme Butonu</a>
+                <a class="btn btn-link text-success" asp-controller="Post" asp-action="AddLike" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-headerId="@Model.Header.Id" asp-route-postId="@item.Id">
+                    @item.LikeCount
+                                @if (item.IsLiked)
+                                {
+                                    <span class="text-success">Like</span>
+                                }
+                                else
+                                {
+                                    <span class="text-dark">Like</span>
+                                }
+                            </a>
+                <a class="btn btn-link text-danger" asp-controller="Post" asp-action="AddDislike" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-postId="@item.Id" asp-route-headerId="@Model.Header.Id">@item.DisLikeCount  <span class="@(item.IsDisLiked?"text-danger":"text-dark")">DisLike</span></a>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div class="col-md-12">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" asp-area="" asp-route-currentPage="@Model.Header.previousPage">Geri</a>
+            </li>
+            @for (int i = 1; i <= Model.Header.pageCount; i++)
+            {
+                if (i == Model.Header.currentPage)
+                {
+                    <li class="page-item active"><a class="page-link">@i</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link"  asp-area="" asp-route-currentPage="@i">@i</a></li>
+                }
+            }
+            <li class="page-item"><a class="page-link"  asp-area="" asp-route-currentPage="@Model.Header.nextPage">İleri</a></li>
+        </ul>
+    </nav>
+</div>
+

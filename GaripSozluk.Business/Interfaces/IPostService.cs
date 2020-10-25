@@ -10,8 +10,9 @@ namespace GaripSozluk.Business.Interfaces
 {
     public interface IPostService
     {
-
-
-
+        ICollection<PostViewModel> GetAllCategory(int id);
+        PostViewModel GetAllPostByHeaderId(int id);
+        int AddPost(NewPostViewModel model, int userId);
     }
 }
+

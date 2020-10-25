@@ -14,7 +14,7 @@ namespace GaripSozluk.Data.Repositories
         {
             _context = context;
         }
-        public IQueryable<Header> GetAll(int id)
+        public IQueryable<Header> GetAllByCategoryId(int id)
         {           
             return GetAll().Where(x => x.CategoryId==id);
         }

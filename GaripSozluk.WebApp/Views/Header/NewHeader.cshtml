@@ -1,13 +1,13 @@
 ﻿@model NewHeaderViewModel
 @{
-    ViewData["Title"] = "NewHeader";
+    ViewData["Title"] = "Yeni Başlık";
 }
 
 <div class="row">
     <div class="col-md-4">
         <section>
             <form asp-controller="Header" asp-action="NewHeader" method="post">
-                <h4>Giriş yap.</h4>
+                <h4>@ViewData["Title"]</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">

@@ -1,0 +1,21 @@
+﻿@model SearchHeaderViewModel
+@{
+    ViewData["Title"] = "Bulunan Başlıklar";
+}
+
+<h1>Bulunan Başlıklar</h1>
+<div class="row col-12">
+    <div class="container">
+
+        @if (Model != null && Model.FoundedHeaders != null)
+        {
+            foreach (var item in Model.FoundedHeaders)
+            {
+                <div class="col-12">
+                    <a class="btn btn-outline-success btn-block" asp-area="" asp-route-headerId="@item.Id" asp-route-categoryId="@Model.SelectedCategoryId" asp-action="Index" asp-controller="Home">&nbsp;@item.Title</a>
+                </div>
+            }
+        }
+    </div>
+</div>
+

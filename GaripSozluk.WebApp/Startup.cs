@@ -43,6 +43,10 @@ namespace GaripSozluk.WebApp
             services.AddScoped<IHeaderService, HeaderService>();
             services.AddScoped<IHeaderRepository, HeaderRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IBlockedUserRepository, BlockedUserRepository>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPostRatingRepository, PostRatingRepository>();
+            services.AddScoped<IPostRatingService, PostRatingService>();
 
             services.AddHttpContextAccessor();
 

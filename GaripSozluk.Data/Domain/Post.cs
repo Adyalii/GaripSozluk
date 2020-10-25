@@ -8,9 +8,8 @@ namespace GaripSozluk.Data.Domain
     {
 
         public int HeaderId { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public string Content { get; set; }
-
 
 
         public virtual Header Header { get; set; }

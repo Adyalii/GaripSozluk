@@ -8,6 +8,7 @@ namespace GaripSozluk.Data.Interfaces
 {
    public interface IHeaderRepository:IBaseRepository<Header>
     {
-        IQueryable<Header> GetAll(int id);
+        IQueryable<Header> GetAllByCategoryId(int id);
+        
     }
 }

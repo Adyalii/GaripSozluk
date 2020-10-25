@@ -7,5 +7,6 @@ namespace GaripSozluk.Common.ViewModels
 {
    public class IndexViewModel: PageViewModel
     {
+        public HeaderViewModel Header { get; set; }
     }
 }

@@ -1,0 +1,34 @@
+﻿@model NewPostViewModel
+@{
+    ViewData["Title"] = "AddPost";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form asp-controller="Post" asp-action="AddPost" method="post">
+                <h4>Yorum Ekle</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="HeaderId" />
+                <input type="hidden" asp-for="CategoryId" />
+                <div class="form-group">
+                    <label asp-for="Content"></label>
+                    <textarea asp-for="Content" class="form-control"></textarea>
+                    <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Yorum Ekle</button>
+                </div>
+
+            </form>
+        </section>
+    </div>
+
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    
+}
+

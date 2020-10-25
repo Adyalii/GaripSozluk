@@ -49,23 +49,32 @@ namespace GaripSozluk.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            var loggedIn = false;
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    loggedIn = true;
                     _logger.LogInformation("Kullanici giris yapti.");
-                    return RedirectToLocal(returnUrl);
+                    //return RedirectToLocal(returnUrl);
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Basarısız giriş denemesi.");
-                    return View(model);
+                    //return View(model);
                 }
             }
-
-            return View(model);
+            if (loggedIn)
+            {
+                return RedirectToLocal(returnUrl);
+            }
+            else
+            {
+                return View();
+            }
+            //return View(model);
         }
 
         #endregion
@@ -248,22 +257,22 @@ namespace GaripSozluk.WebApp.Controllers
         #endregion
 
 
-        public async Task<UserClaimViewModel> GetUserInfos()
-        {
-            var user = HttpContext.User;
-            var dbUser = await _userManager.GetUserAsync(user);
+        //public async Task<UserClaimViewModel> GetUserInfos()
+        //{
+        //    var user = HttpContext.User;
+        //    var dbUser = await _userManager.GetUserAsync(user);
 
-            UserClaimViewModel userClaimViewModel = new UserClaimViewModel()
-            {
-                Email = dbUser.Email,
+        //    UserClaimViewModel userClaimViewModel = new UserClaimViewModel()
+        //    {
+        //        Email = dbUser.Email,
 
-                UserName = dbUser.UserName,
+        //        UserName = dbUser.UserName,
 
-                UserId = dbUser.Id
-            };
+        //        UserId = dbUser.Id
+        //    };
 
-            return userClaimViewModel;
-        }
+        //    return userClaimViewModel;
+        //}
 
 
         [HttpGet]

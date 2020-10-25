@@ -15,8 +15,9 @@ namespace GaripSozluk.Data.Domain
         /// <summary>
         /// Engellenen Kullanıcı Id
         /// </summary>
-        public int BlockedUserId { get; set; }
+        public int BannedUserId { get; set; }
 
         public User User { get; set; }
+        public User BanUser { get; set; }
     }
 }

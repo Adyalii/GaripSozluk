@@ -14,42 +14,63 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-light bg-success border-bottom sticky-top shadow content">
-        <a href="/Home/Index"> <img src="/logo.png" width="50" height="30" class="d-inline-block align-top" alt=""></a>
-        <div class="container">
-            <div class="row sticky-top">
-                <nav class="navbar-brand col-md-2" asp-area="" asp-controller="Home" asp-action="Index">Clone Sözlük</nav>
-                <form class="form-inline" action="/action_page.php">
-                    <input class="form-control mr-sm-2 col-md-8" type="search" placeholder="Search">
-                    <button class="btn btn-success" type="submit">Search</button>
-                </form>
-                <div class="col-md-3"></div>
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <a class="btn btn-link text-light" href="/Account/Register">Kayıt ol</a>
-                    <a class="btn btn-link text-light" href="/Account/Login">Giriş Yap</a>
-                }
-                else
-                {
-                    <a class="btn btn-link text-light" href="#">@User.Identity.Name</a>
-                    <a class="btn btn-link text-light" href="@(Url.Action("Logout","Account"))">Çıkış</a>
-                    <a class="btn btn-link text-light" asp-controller="Header" asp-action="NewHeader" asp-route-categoryId="@Model.SelectedCategoryId">Yeni Başlık</a>
+    <nav class="navbar navbar-expand navbar-light bg-success border-bottom sticky-top shadow content">
+        <div class="d-flex justify-content-between">
+            <a href="/Home/Index"> <img src="/logo.png" width="100" height="88" class="navbar-brand d-inline-block align-top" alt=""></a>
+            <div class="row sticky-top">              
+                <ul class="navbar-nav col-12 d-flex justify-content-between">
+                    @*<li class="nav-item">
+                        <a class="text-light navbar-brand col-md-2" asp-area="" asp-controller="Home" asp-action="Index">&nbsp;Garip Sözlük</a>
+                    </li>*@
+                    @if (Model != null)
+                    {
+                        <li class="nav-item">
+                            <form class="form-inline" asp-controller="Header" asp-action="SearchHeader" asp-route-categoryId="@Model.SelectedCategoryId">
+                                <input class="form-control mr-sm-2 col-md-8" type="text" name="searchText" placeholder="Search">
+                                <button class="btn btn-success" type="submit">Search</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" asp-controller="Header" asp-action="DetailedSearch" asp-route-categoryId="@Model.SelectedCategoryId">Detaylı Arama</a>
+                        </li>
 
-                }
-                <div class="row">
-                    <div class="col-md-12">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                </div>
+                    }
+                    @if (Model != null)
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" asp-controller="Header" asp-action="GetRandomHeader" asp-route-categoryId="@Model.SelectedCategoryId">Rastgele Butonu</a>
+                        </li>
 
+                    }
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" href="/Account/Register">Kayıt ol</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" href="/Account/Login">Giriş Yap</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" href="#">@User.Identity.Name</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" href="@(Url.Action("Logout","Account"))">Çıkış</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" asp-controller="Header" asp-action="NewHeader" asp-route-categoryId="@Model.SelectedCategoryId">Yeni Başlık</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" asp-action="GetBanUsers" asp-controller="User">Engellenen Kullanıcılar</a>
+                        </li>
+                    }
+                </ul>
                 <hr />
-
-
-                <div class="row col-12">
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse col-12">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between col-12">
 
                         @if (Model != null && Model.Categories != null)
                         {
@@ -60,26 +81,6 @@
                                 </div>
                             }
                         }
-
-
-                        @*<div class="col-md-2">
-                    <a class="nav-link text-dark col-md-2" asp-area="" asp-controller="Home" asp-action="Index">Debe</a>
-                </div>
-                <div class="col-md-2">
-                    <a class="nav-link text-dark col-md-2" asp-area="" asp-controller="Home" asp-action="Index">Sorunsallar</a>
-                </div>
-
-                <div class="col-md-2">
-                    <a class="nav-link text-dark col-md-2" asp-area="" asp-controller="Home" asp-action="Index">#Spor</a>
-                </div>
-
-                <div class="col-md-2">
-                    <a class="nav-link text-dark col-md-2" asp-area="" asp-controller="Home" asp-action="Index">#İlişkiler</a>
-                </div>
-
-                <div class="col-md-2">
-                    <a class="nav-link text-dark col-md-2" asp-area="" asp-controller="Home" asp-action="Privacy">#Siyaset</a>
-                </div>*@
                     </div>
                 </div>
             </div>
@@ -88,7 +89,7 @@
 
 
     <div class="row ">
-        <!-- enrtyler -->
+        <!-- Headers -->
         <div style="width:250px;position:fixed; height:100%;overflow:auto;">
             <div class="list-group">
 
@@ -97,90 +98,9 @@
                 {
                     foreach (var item in Model.Headers)
                     {
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;@item.Title <span class="badge badge-light">@item.PostCount</span></a>
+                        <a class="btn btn-outline-success" asp-area="" asp-route-headerId="@item.Id" asp-route-categoryId="@Model.SelectedCategoryId" asp-action="Index" asp-controller="Home">&nbsp;@item.Title <span class="badge badge-light">@item.PostCount</span></a>
                     }
                 }
-
-                
-                @*<a href="#" type="button" class="btn btn-outline-success">&nbsp; Gündemdekiler <span class="badge badge-light">21</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Nasanın Yeni Keşfi <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Elon Musk Çıldırdı <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;IT SektörüNdeki Gelişmeler <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; The Witcher2 Geliyor <span class="badge badge-light">14</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">12</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">6</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light"></span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">17</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;İhtilal <span class="badge badge-light">5</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Gündemdekiler <span class="badge badge-light">21</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Nasanın Yeni Keşfi <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Elon Musk Çıldırdı <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;IT SektörüNdeki Gelişmeler <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; The Witcher2 Geliyor <span class="badge badge-light">14</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">12</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">6</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light"></span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">17</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;İhtilal <span class="badge badge-light">5</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Gündemdekiler <span class="badge badge-light">21</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Nasanın Yeni Keşfi <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Elon Musk Çıldırdı <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;IT SektörüNdeki Gelişmeler <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; The Witcher2 Geliyor <span class="badge badge-light">14</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">12</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">6</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light"></span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">17</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;İhtilal <span class="badge badge-light">5</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Gündemdekiler <span class="badge badge-light">21</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Nasanın Yeni Keşfi <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Elon Musk Çıldırdı <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;IT SektörüNdeki Gelişmeler <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; The Witcher2 Geliyor <span class="badge badge-light">14</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">3</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">12</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">7</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">6</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light"></span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">1</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">2</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">4</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp;Messages <span class="badge badge-light">8</span></a>
-                <a href="#" type="button" class="btn btn-outline-success">&nbsp; Messages <span class="badge badge-light">17</span></a>*@
             </div>
         </div>
 

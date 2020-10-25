@@ -36,12 +36,21 @@ namespace GaripSozluk.Data.Repositories
             return _dbSet.AsQueryable();
         }
 
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
+        {
+            var result = _dbSet.Where(expression).AsQueryable();
+            return result;
+        }
         public TEntity Update(TEntity entity)
         {
             var entityEntry = _dbSet.Update(entity);
             return entityEntry.Entity;
         }
-
+        public int Remove(TEntity entity)
+        {
+            _context.Remove(entity);
+            return _context.SaveChanges();
+        }
         public int SaveChanges()
         {
             return _context.SaveChanges();

@@ -1,4 +1,5 @@
 ﻿using GaripSozluk.Data.Domain;
+using GaripSozluk.Data.Mapping;
 using GaripSozluk.Data.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Text;
 namespace GaripSozluk.Data
 {
 
-    public class GaripSozlukDbContext : IdentityDbContext<User, Role, string> //IdentityDbContext
+    public class GaripSozlukDbContext : IdentityDbContext<User, Role, int> //IdentityDbContext
 
     {
         public GaripSozlukDbContext() : base()
@@ -27,7 +28,7 @@ namespace GaripSozluk.Data
 
         public DbSet<Header> Headers { get; set; }
         public DbSet<PostRating> PostRatings { get; set; }
-        public DbSet<BannedUser> BlockedUsers { get; set; }
+        public DbSet<BlockedUser> BlockedUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,7 +44,7 @@ namespace GaripSozluk.Data
             builder.ApplyConfiguration(new HeaderMapping());
             builder.ApplyConfiguration(new PostMapping());
             builder.ApplyConfiguration(new PostRatingMapping());
-            builder.ApplyConfiguration(new BannedUserMapping());
+            builder.ApplyConfiguration(new BlockedUserMap());
             builder.ApplyConfiguration(new UserMapping());
 
         }

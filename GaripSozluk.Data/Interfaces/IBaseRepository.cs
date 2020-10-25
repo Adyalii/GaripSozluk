@@ -13,6 +13,8 @@ namespace GaripSozluk.Data.Interfaces
         TEntity Update(TEntity entity);
         IQueryable<TEntity> GetAll();
         TEntity Get(Expression<Func<TEntity, bool>> expression);
+        int Remove(TEntity entity);
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression);
         int SaveChanges();
     }
 }

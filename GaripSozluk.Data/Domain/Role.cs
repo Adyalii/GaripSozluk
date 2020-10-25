@@ -6,7 +6,7 @@ using System.Text;
 namespace GaripSozluk.Data.Domain
 {
 
-    public class Role : IdentityRole<String>
+    public class Role : IdentityRole<int>
     {
     }
 }

@@ -7,7 +7,7 @@ namespace GaripSozluk.Data.Domain
     public class PostRating : BaseEntity   //+++
     {
         public int PostId { get; set; }
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public bool IsLiked { get; set; }
 
 
