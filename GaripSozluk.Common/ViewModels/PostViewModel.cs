@@ -20,6 +20,7 @@ namespace GaripSozluk.Common.ViewModels
         public bool IsLiked { get; set; }
         public bool IsDisLiked { get; set; }
         public DateTime CreateDate { get; set; }
+        public string publishYear { get; set; }
         public ICollection<PostViewModel> Posts { get; set; }
 
     }

@@ -47,6 +47,7 @@ namespace GaripSozluk.WebApp
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPostRatingRepository, PostRatingRepository>();
             services.AddScoped<IPostRatingService, PostRatingService>();
+            services.AddScoped<IWebApiService, WebApiService>();
 
             services.AddHttpContextAccessor();
 

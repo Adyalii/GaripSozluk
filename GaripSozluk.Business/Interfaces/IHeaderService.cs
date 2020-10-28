@@ -1,4 +1,5 @@
 ﻿using GaripSozluk.Common.ViewModels;
+using GaripSozluk.Data.Domain;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -15,5 +16,8 @@ namespace GaripSozluk.Business.Interfaces
         int GetRandomHeaderId();
        List<HeaderViewModel> SearchHeaders(string searchText);
         List<HeaderViewModel> DetailedSearchHeaders(DetailedSearchViewModel model);
+        void AddHeaderFromApi(string[] items);
+
+        List<Header> GetAll(); 
     }
 }

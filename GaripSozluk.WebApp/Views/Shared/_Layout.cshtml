@@ -20,8 +20,8 @@
             <div class="row sticky-top">              
                 <ul class="navbar-nav col-12 d-flex justify-content-between">
                     @*<li class="nav-item">
-                        <a class="text-light navbar-brand col-md-2" asp-area="" asp-controller="Home" asp-action="Index">&nbsp;Garip Sözlük</a>
-                    </li>*@
+            <a class="text-light navbar-brand col-md-2" asp-area="" asp-controller="Home" asp-action="Index">&nbsp;Garip Sözlük</a>
+        </li>*@
                     @if (Model != null)
                     {
                         <li class="nav-item">
@@ -43,6 +43,13 @@
 
                     }
 
+                    @if (Model != null)
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-link text-light nav-link" asp-controller="WebApi" asp-action="ApiSearchForm" asp-route-categoryId="@Model.SelectedCategoryId">Web Api</a>
+                        </li>
+
+                    }
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
@@ -60,14 +67,17 @@
                         <li class="nav-item">
                             <a class="btn btn-link text-light nav-link" href="@(Url.Action("Logout","Account"))">Çıkış</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="btn btn-link text-light nav-link" asp-controller="Header" asp-action="NewHeader" asp-route-categoryId="@Model.SelectedCategoryId">Yeni Başlık</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-link text-light nav-link" asp-action="GetBanUsers" asp-controller="User">Engellenen Kullanıcılar</a>
-                        </li>
-                    }
-                </ul>
+                        @if (Model != null && Model.SelectedCategoryId != null)
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-link text-light nav-link" asp-controller="Header" asp-action="NewHeader" asp-route-categoryId="@Model.SelectedCategoryId">Yeni Başlık</a>
+                            </li>
+                        }
+                            <li class="nav-item">
+                                <a class="btn btn-link text-light nav-link" asp-action="GetBanUsers" asp-controller="User">Engellenen Kullanıcılar</a>
+                            </li>
+                        }
+                    </ul>
                 <hr />
                 <div class="col-12">
                     <div class="d-flex justify-content-between col-12">
@@ -76,7 +86,7 @@
                         {
                             foreach (var item in Model.Categories)
                             {
-                                <div class="col-md-2">
+                                <div class="">
                                     <a class="nav-link text-dark col-md-2" asp-area="" asp-controller="Home" asp-route-categoryId="@item.Id" asp-action="Index">@item.Title</a>
                                 </div>
                             }

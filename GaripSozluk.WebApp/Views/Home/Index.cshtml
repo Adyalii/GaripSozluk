@@ -1,6 +1,6 @@
 ﻿@model IndexViewModel
 @{
-    ViewData["Title"] = "Clone Sözlük";
+    ViewData["Title"] = "Garip Sözlük";
 }
 <div class="display-3">
     @Model.Header.Title
@@ -9,31 +9,37 @@ Görüntülenme Sayısı: @Model.Header.ClickCount
 
 <div class="col-form-label container">
     <a class="page-link text-dark col-md-2" asp-area="" asp-controller="Post" asp-action="AddPost" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-headerId="@Model.Header.Id">Yorum Ekle</a>
-    @foreach (var item in Model.Header.PostLists)
+    @if (Model.Header.PostLists != null)
     {
-        <div class="row border m-4 p-2">
-            <div class="row col-12">
-                @item.Content
+
+        @foreach (var item in Model.Header.PostLists)
+        {
+            <div class="row border m-4 p-2">
+                <div class="row col-12">
+                    @item.Content
+                </div>
+                <div class="row col-12 mt-4 pt-4">
+                    <p style="margin-right:auto; text-align:left">@item.UserName</p>
+                    <p style="margin-right:auto; text-align:left">@item.CreateDate</p>
+                    <p style="margin-right:auto; text-align:left">@item.publishYear</p>
+                    <a class="btn btn-link text-warning" asp-controller="User" asp-action="BanUser" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-blockedUserId="@item.UserId" asp-route-headerId="@Model.Header.Id">Engelleme Butonu</a>
+                    <a class="btn btn-link text-success" asp-controller="Post" asp-action="AddLike" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-headerId="@Model.Header.Id" asp-route-postId="@item.Id">
+                        @item.LikeCount
+                        @if (item.IsLiked)
+                        {
+                            <span class="text-success">Like</span>
+                        }
+                        else
+                        {
+                            <span class="text-dark">Like</span>
+                        }
+                    </a>
+                    <a class="btn btn-link text-danger" asp-controller="Post" asp-action="AddDislike" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-postId="@item.Id" asp-route-headerId="@Model.Header.Id">@item.DisLikeCount  <span class="@(item.IsDisLiked?"text-danger":"text-dark")">DisLike</span></a>
+                </div>
             </div>
-            <div class="row col-12 mt-4 pt-4">
-                <p style="margin-right:auto; text-align:left">@item.UserName</p>
-                <p style="margin-right:auto; text-align:left">@item.CreateDate</p>
-                <a class="btn btn-link text-warning" asp-controller="User" asp-action="BanUser" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-blockedUserId="@item.UserId" asp-route-headerId="@Model.Header.Id">Engelleme Butonu</a>
-                <a class="btn btn-link text-success" asp-controller="Post" asp-action="AddLike" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-headerId="@Model.Header.Id" asp-route-postId="@item.Id">
-                    @item.LikeCount
-                                @if (item.IsLiked)
-                                {
-                                    <span class="text-success">Like</span>
-                                }
-                                else
-                                {
-                                    <span class="text-dark">Like</span>
-                                }
-                            </a>
-                <a class="btn btn-link text-danger" asp-controller="Post" asp-action="AddDislike" asp-route-categoryId="@Model.SelectedCategoryId" asp-route-postId="@item.Id" asp-route-headerId="@Model.Header.Id">@item.DisLikeCount  <span class="@(item.IsDisLiked?"text-danger":"text-dark")">DisLike</span></a>
-            </div>
-        </div>
+        }
     }
+
 
 </div>
 
@@ -51,10 +57,10 @@ Görüntülenme Sayısı: @Model.Header.ClickCount
                 }
                 else
                 {
-                    <li class="page-item"><a class="page-link"  asp-area="" asp-route-currentPage="@i">@i</a></li>
+                    <li class="page-item"><a class="page-link" asp-area="" asp-route-currentPage="@i">@i</a></li>
                 }
             }
-            <li class="page-item"><a class="page-link"  asp-area="" asp-route-currentPage="@Model.Header.nextPage">İleri</a></li>
+            <li class="page-item"><a class="page-link" asp-area="" asp-route-currentPage="@Model.Header.nextPage">İleri</a></li>
         </ul>
     </nav>
 </div>

@@ -1,0 +1,115 @@
+﻿@model ApiSearchViewModel
+@{
+    ViewData["Title"] = "Arama Sonucu";
+}
+
+<h1>Arama Sonucu</h1>
+
+@*@if (Model != null)
+    {
+
+        <div class="col-md-12">
+            <ul class="list-group" id="ItemList">
+
+
+
+                @foreach (var item in Model.docs)
+                {
+
+                    <li class="list-group-item">
+                        <div class="row">
+
+
+
+                            <label for="Check_@item.title">Kitap Adı:@item.title---</label>
+
+                            @if (item.author_name != null)
+                            {
+                                <label for="Check@item.author_name.FirstOrDefault()">Yazar Adı:@item.author_name.FirstOrDefault()---</label>
+                            }
+
+                            <label for="Check@item.first_publish_year">Çıkış Yılı:@item.first_publish_year</label>
+
+
+                        </div>
+                    </li>
+
+                }
+
+            </ul>
+        </div>
+
+    }*@
+
+<table class="table" id="table_id">
+    <thead>
+        <tr>
+            <th>Başlık</th>
+            <th>Yazar Adı</th>
+            <th>Çıkış Yılı</th>
+        </tr>
+    </thead>
+    <tbody id="items">
+        @if (Model.docs != null)
+        {
+            @foreach (var item in Model.docs)
+            {
+                if (item.author_name != null)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" value="@(item.title+"(Kitap)" )" />
+                            <label for="Check_@item.title">Kitap Adı:@item.title</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" value="@(item.author_name.FirstOrDefault()+"(Yazar)")" />
+                            <label for="Check@item.author_name.FirstOrDefault()">Yazar Adı:@item.author_name.FirstOrDefault()</label>
+                        </td>
+                        <td>@item.first_publish_year</td>
+                    </tr>
+                }
+            }
+        }
+        <tr>
+            <td colspan="3">
+                <button type="button" class="btn btn-success btn-block" id="Insert">Ekle</button>
+            </td>
+        </tr>
+        
+
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Insert").on("click", function (e) {
+                var arrayItem = [];
+                
+                $("#items input[type=checkbox]").each(function (index, val) {
+
+                    var checkedValue = $(val);
+                    var isChecked = $(checkedValue).is(":checked", true);
+
+                    if (isChecked) {
+                        arrayItem.push(checkedValue.attr("value"));
+                    };
+                });
+
+                if (arrayItem.length > 0) {
+
+                    $.ajax({
+                        url: "/WebApi/AddHeaderFromApi",
+                        type: "POST",
+                        data: { items: arrayItem },
+                        success: function (response) {
+                            alert("Seçtiğiniz kitaplar eklenmiştir");
+                        }
+                    });
+                };
+
+            });
+        });
+    </script>
+}

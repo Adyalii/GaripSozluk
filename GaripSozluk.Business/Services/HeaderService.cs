@@ -55,8 +55,8 @@ namespace GaripSozluk.Business.Services
 
                 row.Title = item.Title;
                 row.Id = item.Id;
-                row.PostCount = item.Posts.Where(x=>!blockedIdList.Contains(x.UserId)).Count();
-                
+                row.PostCount = item.Posts.Where(x => !blockedIdList.Contains(x.UserId)).Count();
+
                 List.Add(row);
             }
             return List;
@@ -88,16 +88,16 @@ namespace GaripSozluk.Business.Services
 
         }
 
-        public HeaderViewModel GetAllPostByHeaderId(int id,int currentPage = 1)
+        public HeaderViewModel GetAllPostByHeaderId(int id, int currentPage = 1)
         {
             var user = _httpContextAccessor.HttpContext.User;
             var header = _headerRepository.GetAll().Where(x => x.Id == id).Include("Posts").FirstOrDefault();
             List<int> blockedIdList = new List<int>();
 
-            int userId=0;
-            if (user.Claims.Count()>0) 
+            int userId = 0;
+            if (user.Claims.Count() > 0)
             {
-                 userId = int.Parse(user.Claims.ToList().First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                userId = int.Parse(user.Claims.ToList().First(x => x.Type == ClaimTypes.NameIdentifier).Value);
                 var blockedUsers = _accountService.GetAll(userId);
                 foreach (var item in blockedUsers)
                 {
@@ -105,7 +105,7 @@ namespace GaripSozluk.Business.Services
 
                 }
             }
-           
+
 
             HeaderViewModel model = new HeaderViewModel();
             if (header == null)
@@ -118,7 +118,7 @@ namespace GaripSozluk.Business.Services
             //model.PostCount = header.Posts.Count;
             model.Title = header.Title;
             model.PostLists = new List<PostViewModel>();
-          
+
             var itemCount = _postRepository.GetAll().Where(x => x.HeaderId == header.Id).Include("User").Where(x => !blockedIdList.Contains(x.UserId)).Count();//yorumları sayıyoruz(Engellenmiş hali ile)
             model.currentPage = currentPage;
             var itemSize = 5;
@@ -149,7 +149,7 @@ namespace GaripSozluk.Business.Services
                         row.IsLiked = _postRatingService.IsLiked(item.Id, userId);
                         row.IsDisLiked = _postRatingService.IsDisLiked(item.Id, userId);
                     }
-                    
+
                     model.PostLists.Add(row);
                 }
 
@@ -200,22 +200,31 @@ namespace GaripSozluk.Business.Services
                 query = query.Where(x => x.Title.Contains(model.Text));
             }
 
-            if (model.DateOne.HasValue || model.DateTwo.HasValue)
-            {
-                if (model.DateOne.HasValue && model.DateTwo == null)
-                {
-                    query = query.Where(x => x.CreateDate > model.DateOne.Value);
-                }
-                else if (model.DateOne == null && model.DateTwo.HasValue)
-                {
-                    query = query.Where(x => x.CreateDate < model.DateTwo.Value);
-                }
-                else
-                {
-                    query = query.Where(x => (x.CreateDate >= model.DateOne.Value && x.CreateDate <= model.DateTwo.Value));
-                }
 
+            if (model.DateOne.HasValue)
+            {
+                query = query.Where(x => x.CreateDate >= model.DateOne);
             }
+            if (model.DateTwo.HasValue)
+            {
+                query = query.Where(x => x.CreateDate <= model.DateTwo);
+            }
+            //if (model.DateOne.HasValue || model.DateTwo.HasValue)
+            //{
+            //    if (model.DateOne.HasValue && model.DateTwo == null)
+            //    {
+            //        query = query.Where(x => x.CreateDate > model.DateOne.Value);
+            //    }
+            //    else if (model.DateOne == null && model.DateTwo.HasValue)
+            //    {
+            //        query = query.Where(x => x.CreateDate < model.DateTwo.Value);
+            //    }
+            //    else
+            //    {
+            //        query = query.Where(x => (x.CreateDate >= model.DateOne.Value && x.CreateDate <= model.DateTwo.Value));
+            //    }
+
+            //}
 
             if (model.SortType == 1)
             {
@@ -248,6 +257,47 @@ namespace GaripSozluk.Business.Services
             }
             return model.FoundedDetailedHeaders;
 
+        }
+
+        public void AddHeaderFromApi(string[] items)
+        {
+            var user = _httpContextAccessor.HttpContext.User;
+            var UserId = int.Parse(user.Claims.ToList().First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+            foreach (var item in items)
+            {
+                var header = new Header();
+
+                if (item.EndsWith("(Kitap)"))
+                {
+                    header.CategoryId = 7;
+                }
+                else
+                {
+                    header.CategoryId = 8;
+                }
+
+                header.ClickCount = 0;
+                header.Title = item;
+                header.UserId = UserId;
+                header.CreateDate = DateTime.Now;
+
+                _headerRepository.Add(header);              
+                try
+                {
+                    _headerRepository.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        public List<Header> GetAll()
+        {
+            return _headerRepository.GetAll().ToList();
         }
     }
 }

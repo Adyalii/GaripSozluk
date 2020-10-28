@@ -51,8 +51,8 @@ namespace GaripSozluk.Business.Services
             }
 
         }
-      
 
+       
     }
 
 }
